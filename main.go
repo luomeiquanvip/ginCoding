@@ -1,14 +1,15 @@
 package main
 
 import (
-	"ginCoding/db"
-	"ginCoding/router"
+	db "ginCoding/db"
+	. "ginCoding/router"
 )
 
 func main()  {
+	defer db.Db.Close()
 	db.Init()
 
-	router := router.InitRouter()
+	router := InitRouter()
 	router.Run(":8888")
 
 }
