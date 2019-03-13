@@ -14,7 +14,8 @@ func InitRouter() *gin.Engine {
 	router.GET("/Orders", Orders)
 	router.GET("/updateOrder", UpdateOrder)
 	router.GET("/fuzzySearch", FuzzySearch)
-	router.GET("/InfoOrderByAmount", InfoOrderByAmount)
+	router.GET("/infoOrderByAmount", InfoOrderByAmount)
+	router.GET("/txInsert", TxInsert)
 
 
 	return router

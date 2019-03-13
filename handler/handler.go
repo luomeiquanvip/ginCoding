@@ -71,3 +71,19 @@ func InfoOrderByAmount(c *gin.Context) {
 		"count":len(orders),
 	})
 }
+
+func TxInsert(c *gin.Context)  {
+
+
+	var o *Order
+	orders, err := o.TxInsert()
+	if err !=nil {
+		log.Fatal(err)
+	}
+	//H is a shortcut for map[string]interface{}
+	c.JSON(http.StatusOK,gin.H{
+		"result":orders,
+		"count":len(orders),
+	})
+
+}
