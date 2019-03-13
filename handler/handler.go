@@ -27,7 +27,7 @@ func CreateAndInsert(c *gin.Context)  {
 	c.String(http.StatusOK, "create successful")
 }
 //获得所有订单信息
-func GetOrdersApi(c *gin.Context) {
+func Orders(c *gin.Context) {
 	var o *Order
 	orders, err := o.GetOrders()
 	if err != nil {
@@ -45,10 +45,8 @@ func UpdateOrder(c *gin.Context) {
 	Db.Model(&Order{}).Where("amount = ?", 22.2).Update("User_name", "si")
 	c.String(http.StatusOK, "update successful")
 }
-
+//模糊查询
 func FuzzySearch(c *gin.Context) {
-
-
 	var o *Order
 	orders, err := o.GetFuzzySearchs()
 	if err !=nil {
@@ -59,5 +57,17 @@ func FuzzySearch(c *gin.Context) {
 		"result":orders,
 		"count":len(orders),
 	})
+}
 
+func InfoOrderByAmount(c *gin.Context) {
+	var o *Order
+	orders, err := o.GetInfoOrderByAmount()
+	if err !=nil {
+		log.Fatal(err)
+	}
+	//H is a shortcut for map[string]interface{}
+	c.JSON(http.StatusOK,gin.H{
+		"result":orders,
+		"count":len(orders),
+	})
 }

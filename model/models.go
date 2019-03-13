@@ -22,3 +22,8 @@ func (p *Order) GetFuzzySearchs() (orders []Order, err error) {
 	Db.Where("order_id LIKE ?","%2%").Find(&orders)
 	return
 }
+
+func (p *Order) GetInfoOrderByAmount() (orders []Order, err error) {
+	Db.Order("amount desc").Find(&orders)
+	return
+}

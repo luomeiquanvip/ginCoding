@@ -10,10 +10,11 @@ func InitRouter() *gin.Engine {
 
 	//IndexApi为一个Handler
 	router.GET("/", IndexApi)
-	router.GET("/create", CreateAndInsert)
-	router.GET("/orders", GetOrdersApi)
-	router.GET("/update", UpdateOrder)
+	router.GET("/createAndInsert", CreateAndInsert)
+	router.GET("/Orders", Orders)
+	router.GET("/updateOrder", UpdateOrder)
 	router.GET("/fuzzySearch", FuzzySearch)
+	router.GET("/InfoOrderByAmount", InfoOrderByAmount)
 
 
 	return router
