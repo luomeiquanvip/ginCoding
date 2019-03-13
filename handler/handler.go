@@ -1,8 +1,8 @@
 package handler
 
 import (
-	."ginCoding/db"
-	."ginCoding/model"
+	. "ginCoding/db"
+	. "ginCoding/model"
 	"gopkg.in/gin-gonic/gin.v1"
 	"log"
 	"net/http"
@@ -29,19 +29,35 @@ func CreateAndInsert(c *gin.Context)  {
 //获得所有订单信息
 func GetOrdersApi(c *gin.Context) {
 	var o *Order
-	persons, err := o.GetPersons()
+	orders, err := o.GetOrders()
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"persons": persons,
+		"persons": orders,
 	})
 
 }
-
+//更新操作
 func UpdateOrder(c *gin.Context) {
 
 	Db.Model(&Order{}).Where("amount = ?", 22.2).Update("User_name", "si")
 	c.String(http.StatusOK, "update successful")
+}
+
+func FuzzySearch(c *gin.Context) {
+
+
+	var o *Order
+	orders, err := o.GetFuzzySearchs()
+	if err !=nil {
+		log.Fatal(err)
+	}
+	//H is a shortcut for map[string]interface{}
+	c.JSON(http.StatusOK,gin.H{
+		"result":orders,
+		"count":len(orders),
+	})
+
 }

@@ -13,6 +13,7 @@ func InitRouter() *gin.Engine {
 	router.GET("/create", CreateAndInsert)
 	router.GET("/orders", GetOrdersApi)
 	router.GET("/update", UpdateOrder)
+	router.GET("/fuzzySearch", FuzzySearch)
 
 
 	return router

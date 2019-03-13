@@ -1,7 +1,7 @@
 package model
 
 import (
-	db"ginCoding/db"
+	."ginCoding/db"
 )
 
 type Order struct {
@@ -13,7 +13,12 @@ type Order struct {
 	File_url string  `json:"file_url"`
 }
 
-func (p *Order) GetPersons() (persons []Order, err error) {
-	db.Db.Table("orders").Find(&persons)
+func (p *Order) GetOrders() (orders []Order, err error) {
+	Db.Table("orders").Find(&orders)
+	return
+}
+
+func (p *Order) GetFuzzySearchs() (orders []Order, err error) {
+	Db.Where("order_id LIKE ?","%2%").Find(&orders)
 	return
 }
