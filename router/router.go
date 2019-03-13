@@ -16,6 +16,7 @@ func InitRouter() *gin.Engine {
 	router.GET("/fuzzySearch", FuzzySearch)
 	router.GET("/infoOrderByAmount", InfoOrderByAmount)
 	router.GET("/txInsert", TxInsert)
+	router.POST("/upload", UploadFile)
 
 
 	return router
