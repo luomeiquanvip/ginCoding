@@ -5,7 +5,16 @@ import (
 )
 
 type Order struct {
-	ID uint `json:"id"`
+	ID int `json:"id"`
+	Order_id  string `json:"order_id"`
+	User_name string `json:"user_name"`
+	Amount float64 `json:"amount"`
+	Status string `json:"status"`
+	File_url string  `json:"file_url"`
+}
+
+type OrderBack struct {
+	ID int `json:"id"`
 	Order_id  string `json:"order_id"`
 	User_name string `json:"user_name"`
 	Amount float64 `json:"amount"`

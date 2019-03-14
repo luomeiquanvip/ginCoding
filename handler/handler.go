@@ -4,6 +4,8 @@ import (
 	"fmt"
 	. "ginCoding/db"
 	. "ginCoding/model"
+	"github.com/mapslice"
+	"github.com/tealeg/xlsx"
 	"gopkg.in/gin-gonic/gin.v1"
 	"io"
 	"log"
@@ -116,4 +118,73 @@ func UploadFile(c *gin.Context) {
 	}
 
 	c.String(http.StatusCreated, "upload successful \n")
+}
+
+
+
+
+func DownloadToExcel(c *gin.Context) {
+	var order OrderBack
+	var orderlists []OrderBack
+	orderlist, err := GetorderList()
+	if err !=nil{
+		log.Fatal(err)
+	}
+
+	for i := 0; i < len(orderlist); i++ {
+		order.ID =  orderlist[i].ID
+		order.Order_id = orderlist[i].Order_id
+		order.User_name = orderlist[i].User_name
+		order.Amount =  orderlist[i].Amount
+		order.Status = orderlist[i].Status
+		order.File_url = orderlist[i].File_url
+		orderlists = append(orderlists, order)
+	}
+	id, _ := mapslice.ToStrings(orderlists, "ID")
+	order_id, _ := mapslice.ToStrings(orderlists, "Order_id")
+	user_name, _ := mapslice.ToStrings(orderlists, "User_name")
+	amount, _ := mapslice.ToStrings(orderlists, "Amount")
+	status, _ := mapslice.ToStrings(orderlists, "Status")
+	file_url, _ := mapslice.ToStrings(orderlists, "File_url")
+
+
+	var file *xlsx.File
+	var sheet *xlsx.Sheet
+	var row *xlsx.Row
+	var cell *xlsx.Cell
+	file = xlsx.NewFile()
+	sheet, _ = file.AddSheet("Sheet1")
+	row = sheet.AddRow()
+	cell = row.AddCell()
+	cell.Value = "编号"
+	cell = row.AddCell()
+	cell.Value = "订单编号"
+	cell = row.AddCell()
+	cell.Value = "用户名"
+	cell = row.AddCell()
+	cell.Value = "状态"
+	cell = row.AddCell()
+	cell.Value = "订单路径"
+	for i := 0; i < len(id); i++ {
+		row = sheet.AddRow()
+		cell = row.AddCell()
+		cell.Value = id[i]
+		cell = row.AddCell()
+		cell.Value = order_id[i]
+		cell = row.AddCell()
+		cell.Value = user_name[i]
+		cell = row.AddCell()
+		cell.Value = amount[i]
+		cell = row.AddCell()
+		cell.Value = status[i]
+		cell = row.AddCell()
+		cell.Value = file_url[i]
+		file.Save("/home/qydev/go/src/ginCoding/File.xlsx")
+	}
+
+	c.String(http.StatusCreated, "DownloadToExcel successful \n")
+}
+func GetorderList() (orderlist []Order, err error) {
+	err = Db.Table("orders").Find(&orderlist).Error
+	return orderlist, err
 }

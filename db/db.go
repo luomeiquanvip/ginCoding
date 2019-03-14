@@ -4,6 +4,7 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+	"log"
 )
 
 var Db *gorm.DB
@@ -16,6 +17,9 @@ func Init() {
 		fmt.Println(err)
 	}
 
+	err := Db.DB().Ping()
+	if err != nil {
+		Db.DB().Close()
+		log.Fatalf("Error on opening database connection: %s", err.Error())
+	}
 }
-
-

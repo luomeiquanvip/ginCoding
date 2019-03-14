@@ -17,6 +17,7 @@ func InitRouter() *gin.Engine {
 	router.GET("/infoOrderByAmount", InfoOrderByAmount)
 	router.GET("/txInsert", TxInsert)
 	router.POST("/upload", UploadFile)
+	router.POST("/downloadToExcel", DownloadToExcel)
 
 
 	return router
